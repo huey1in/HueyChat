@@ -55,3 +55,6 @@ temp/
 .env.test.local
 .env.production.local
 
+# Backend folder
+backend/
+

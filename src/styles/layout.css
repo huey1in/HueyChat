@@ -1,0 +1,9 @@
+/* 布局相关样式 */
+
+/* 3. 聊天应用主体布局 */
+#app {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+}

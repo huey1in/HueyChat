@@ -1,0 +1,147 @@
+/* 通知样式 */
+
+.notification-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 320px;
+}
+
+.notification {
+  background: white;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  border: 1px solid #e5e7eb;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.3s ease-out;
+  position: relative;
+  min-width: 280px;
+}
+
+.notification.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.notification.success {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-color: #bbf7d0;
+}
+
+.notification.error {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border-color: #fecaca;
+}
+
+.notification.warning {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-color: #fde68a;
+}
+
+.notification-content {
+  display: block;
+}
+
+.notification-body {
+  flex: 1;
+}
+
+.notification-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.notification-message {
+  font-size: 13px;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+.notification.success .notification-title {
+  color: #065f46;
+}
+
+.notification.success .notification-message {
+  color: #047857;
+}
+
+.notification.error .notification-title {
+  color: #7f1d1d;
+}
+
+.notification.error .notification-message {
+  color: #dc2626;
+}
+
+.notification.warning .notification-title {
+  color: #78350f;
+}
+
+.notification.warning .notification-message {
+  color: #d97706;
+}
+
+.notification-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 50%;
+  color: #6b7280;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.notification-close:hover {
+  background: rgba(0, 0, 0, 0.2);
+  color: #374151;
+}
+
+.notification-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.notification-action {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.notification-action:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-1px);
+}
+
+.notification-action.primary {
+  background: #ff6b35;
+  color: white;
+  border-color: #ff6b35;
+}
+
+.notification-action.primary:hover {
+  background: #e85a2e;
+  border-color: #e85a2e;
+}
