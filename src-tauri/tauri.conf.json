@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schema.tauri.app/config/2.0.0",
+  "productName": "HueyChat",
+  "version": "0.1.0",
+  "identifier": "com.hueychat.app",
+  "build": {
+    "beforeBuildCommand": "npm run build",
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "frontendDist": "../dist"
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/favicon.ico"
+    ]
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "HueyChat",
+        "width": 800,
+        "height": 600,
+        "resizable": false,
+        "fullscreen": false,
+        "decorations": false,
+        "transparent": false
+      }
+    ],
+    "security": {
+      "capabilities": [
+        {
+          "identifier": "window-controls",
+          "windows": ["*"],
+          "permissions": [
+            "core:window:allow-close",
+            "core:window:allow-minimize"
+          ]
+        }
+      ]
+    }
+  }
+}

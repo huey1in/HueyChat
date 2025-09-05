@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HueyChat</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <!-- 窗口控制栏（保持原样） -->
+    <div class="titlebar">
+      <div class="traffic-lights" data-tauri-drag-region="false">
+        <div class="traffic-light close" id="close-btn" data-tauri-drag-region="false"></div>
+        <div class="traffic-light minimize" id="minimize-btn" data-tauri-drag-region="false"></div>
+      </div>
+      <div class="title" data-tauri-drag-region>HueyChat</div>
+    </div>
+    
+    <!-- 高斯模糊背景层（新增） -->
+    <div class="blur-background"></div>
+    
+    <!-- 聊天应用主体 -->
+    <div id="app">
+      <!-- 左侧聊天列表 -->
+      <div class="chat-sidebar">
+        <div class="sidebar-header">
+          <h2>HueyChat</h2>
+          <button class="new-chat-btn">+</button>
+        </div>
+        <div class="chat-list">
+          <!-- 聊天列表将通过JavaScript动态生成 -->
+        </div>
+      </div>
+      
+      <!-- 右侧聊天窗口 -->
+      <div class="chat-main">
+        
+        <!-- 聊天消息区域 -->
+        <div class="chat-messages">
+          <!-- 消息将通过JavaScript动态添加 -->
+        </div>
+        
+        <!-- 消息输入区域 -->
+        <div class="chat-input">
+          <input type="text" id="message-input" placeholder="输入消息..." />
+          <button id="send-button" type="button">发送</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 系统提示词设置模态框 -->
+    <div id="prompt-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>设置系统提示词</h3>
+          <button class="modal-close" onclick="closePromptModal()">×</button>
+        </div>
+        <div class="modal-body">
+          <textarea id="prompt-textarea" placeholder="输入系统提示词，用于定义AI的角色和行为方式...&#10;&#10;例如：你是一个专业的编程助手，请用简洁明了的方式回答技术问题。" rows="6"></textarea>
+          <p class="modal-tip">留空表示使用默认的AI助手角色</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="closePromptModal()">取消</button>
+          <button class="btn-primary" onclick="savePrompt()">确定</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右键上下文菜单 -->
+    <div id="context-menu" class="context-menu">
+      <div class="menu-item" onclick="editChatPrompt()">
+        <span class="menu-text">修改设定</span>
+      </div>
+      <div class="menu-item menu-item-danger" onclick="contextDeleteChat()">
+        <span class="menu-text">删除聊天</span>
+      </div>
+    </div>
+
+    <!-- 确认删除模态框 -->
+    <div id="confirm-modal" class="modal">
+      <div class="modal-content confirm-modal-content">
+        <div class="modal-header">
+          <h3>确认删除</h3>
+        </div>
+        <div class="modal-body">
+          <p id="confirm-message">确定要删除这个聊天吗？</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="closeConfirmModal()">取消</button>
+          <button class="btn-danger" onclick="confirmDelete()">删除</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
