@@ -2,7 +2,7 @@
 
 // API 基础配置
 export const API_CONFIG = {
-  BASE_URL: 'http://localhost:3001/api/v1'
+  BASE_URL: 'https://chat.yinxh.fun/api/v1'
 };
 
 // 获取完整的API URL
