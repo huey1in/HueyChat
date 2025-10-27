@@ -13,15 +13,15 @@
     "active": true,
     "targets": "all",
     "icon": [
-      "icons/favicon.ico"
+      "icons/favicon2.ico"
     ]
   },
   "app": {
     "windows": [
       {
         "title": "HueyChat",
-        "width": 800,
-        "height": 600,
+        "width": 900,
+        "height": 700,
         "resizable": false,
         "fullscreen": false,
         "decorations": false,

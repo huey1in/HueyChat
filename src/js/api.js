@@ -70,7 +70,6 @@ export async function sendMessage(messageInputEl, sendButtonEl, currentChatId, u
   // 禁用输入和发送按钮
   messageInputEl.disabled = true;
   sendButtonEl.disabled = true;
-  sendButtonEl.textContent = '发送中...';
   
   // 添加用户消息到聊天窗口和存储
   addMessage(messageText, 'sent');
@@ -79,9 +78,37 @@ export async function sendMessage(messageInputEl, sendButtonEl, currentChatId, u
   // 清空输入框
   messageInputEl.value = '';
   
+  // 添加加载指示器消息（三个点循环）
+  const messagesContainer = document.querySelector('.chat-messages');
+  const loadingMessageDiv = document.createElement('div');
+  loadingMessageDiv.className = 'message received loading';
+  loadingMessageDiv.id = 'loading-message';
+  
+  const now = new Date();
+  const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+  
+  loadingMessageDiv.innerHTML = `
+    <div class="message-content">
+      <div class="message-text">
+        <span class="loading-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </div>
+    </div>
+    <div class="message-time">${timeStr}</div>
+  `;
+  
+  messagesContainer.appendChild(loadingMessageDiv);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  
   try {
     // 调用后端聊天接口获取回复
     const aiResponse = await callAI(messageText, currentChatId, userAuth, chatStorage);
+    
+    // 移除加载指示器
+    loadingMessageDiv.remove();
     
     // 添加AI回复到聊天窗口和存储
     addMessage(aiResponse, 'received');
@@ -93,6 +120,9 @@ export async function sendMessage(messageInputEl, sendButtonEl, currentChatId, u
     // 更新用户卡片以显示最新积分
     updateUserCard();
   } catch (error) {
+    // 移除加载指示器
+    loadingMessageDiv.remove();
+    
     // 显示错误消息
     let errorMessage = '抱歉，发生了错误，请稍后重试。';
     if (error.message.includes('401') || error.message.includes('未授权')) {

@@ -95,7 +95,7 @@ POST /api/v1/auth/register
     "userId": "uuid",
     "username": "string",
     "email": "string",
-    "createdAt": "2024-01-01T00:00:00Z"
+    "createdAt": "2025-01-01T00:00:00Z"
   }
 }
 ```
@@ -200,7 +200,7 @@ Authorization: Bearer {token}
         "isDefault": true,
         "isPublic": true,
         "createdBy": "system|userId",
-        "createdAt": "2024-01-01T00:00:00Z"
+        "createdAt": "2025-01-01T00:00:00Z"
       }
     ],
     "pagination": {
@@ -279,8 +279,8 @@ Authorization: Bearer {token}
         "tags": ["对话", "日常"],
         "isDefault": false,
         "usageCount": 15,
-        "createdAt": "2024-01-01T00:00:00Z",
-        "updatedAt": "2024-01-01T00:00:00Z"
+        "createdAt": "2025-01-01T00:00:00Z",
+        "updatedAt": "2025-01-01T00:00:00Z"
       }
     ]
   }
@@ -361,7 +361,7 @@ Authorization: Bearer {token}
         "responseTime": 1.2
       }
     },
-    "timestamp": "2024-01-01T00:00:00Z"
+    "timestamp": "2025-01-01T00:00:00Z"
   }
 }
 ```
@@ -384,10 +384,10 @@ Authorization: Bearer {token}
         "characterId": "uuid",
         "characterName": "小艾",
         "lastMessage": "今天天气真不错！",
-        "lastMessageTime": "2024-01-01T00:00:00Z",
+        "lastMessageTime": "2025-01-01T00:00:00Z",
         "messageCount": 25,
         "isArchived": false,
-        "createdAt": "2024-01-01T00:00:00Z"
+        "createdAt": "2025-01-01T00:00:00Z"
       }
     ]
   }
@@ -517,7 +517,7 @@ Authorization: Bearer {token}
 {
   "dataType": "conversations|characters|prompts|settings",
   "data": {},
-  "lastSyncTime": "2024-01-01T00:00:00Z",
+  "lastSyncTime": "2025-01-01T00:00:00Z",
   "deviceId": "string"
 }
 ```
@@ -548,7 +548,7 @@ Authorization: Bearer {token}
   "success": true,
   "message": "操作成功",
   "data": {},
-  "timestamp": "2024-01-01T00:00:00Z"
+  "timestamp": "2025-01-01T00:00:00Z"
 }
 ```
 
@@ -561,7 +561,7 @@ Authorization: Bearer {token}
     "message": "用户不存在",
     "details": "Additional error details"
   },
-  "timestamp": "2024-01-01T00:00:00Z"
+  "timestamp": "2025-01-01T00:00:00Z"
 }
 ```
 
@@ -621,7 +621,7 @@ Authorization: Bearer {token}
         "messageId": "uuid",
         "content": "用户提到喜欢爬山",
         "importance": 0.8,
-        "timestamp": "2024-01-01T00:00:00Z"
+        "timestamp": "2025-01-01T00:00:00Z"
       }
     ],
     "longTermMemory": {
@@ -637,7 +637,7 @@ Authorization: Bearer {token}
         "importantMoments": [
           {
             "event": "第一次聊天",
-            "date": "2024-01-01",
+            "date": "2025-01-01",
             "description": "用户分享了工作压力",
             "emotion": "empathetic"
           }
@@ -690,7 +690,7 @@ Authorization: Bearer {token}
       {
         "emotion": "curious",
         "intensity": 0.6,
-        "timestamp": "2024-01-01T10:00:00Z",
+        "timestamp": "2025-01-01T10:00:00Z",
         "trigger": "用户问了新问题"
       }
     ],
@@ -754,8 +754,8 @@ Authorization: Bearer {token}
   "query": "之前聊过的电影",
   "searchType": "semantic|keyword|emotion",
   "timeRange": {
-    "start": "2024-01-01T00:00:00Z",
-    "end": "2024-01-31T23:59:59Z"
+    "start": "2025-01-01T00:00:00Z",
+    "end": "2025-01-31T23:59:59Z"
   },
   "limit": 10
 }
