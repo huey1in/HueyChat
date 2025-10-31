@@ -61,3 +61,35 @@
 .menu-item-danger .menu-text {
   color: #dc2626;
 }
+
+/* 用户菜单样式 */
+.user-menu {
+  position: fixed;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  padding: 0.5rem 0;
+  min-width: 120px;
+  z-index: 2500;
+  display: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.user-menu.show {
+  display: block;
+  animation: userMenuSlideIn 0.2s ease;
+  pointer-events: auto;
+}
+
+@keyframes userMenuSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}

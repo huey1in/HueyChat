@@ -9,7 +9,19 @@ export const API_CONFIG = {
 export function getApiUrl(endpoint) {
   return `${API_CONFIG.BASE_URL}${endpoint.startsWith('/') ? endpoint : '/' + endpoint}`;
 }
-export async function callAI(userMessage, chatId, userAuth, chatStorage) {
+
+// 获取可用的AI模型列表
+export async function fetchAvailableModels(userAuth) {
+  try {
+    const response = await userAuth.apiRequest('/chat/models');
+    return response.data.models || [];
+  } catch (error) {
+    console.error('获取模型列表错误:', error);
+    return [];
+  }
+}
+
+export async function callAI(userMessage, chatId, userAuth, chatStorage, selectedModel = null) {
   try {
     const chat = chatStorage.getChat(chatId);
     if (!chat) {
@@ -22,14 +34,22 @@ export async function callAI(userMessage, chatId, userAuth, chatStorage) {
       context.customPrompt = chat.prompt.trim();
     }
 
+    // 构建请求体
+    const requestBody = {
+      message: {
+        content: userMessage
+      },
+      context: context
+    };
+
+    // 如果指定了模型，添加到请求中
+    if (selectedModel) {
+      requestBody.model = selectedModel;
+    }
+
     const response = await userAuth.apiRequest('/chat/send', {
       method: 'POST',
-      body: JSON.stringify({
-        message: {
-          content: userMessage
-        },
-        context: context
-      })
+      body: JSON.stringify(requestBody)
     });
 
     if (!response.data || !response.data.response || !response.data.response.content) {
@@ -104,8 +124,18 @@ export async function sendMessage(messageInputEl, sendButtonEl, currentChatId, u
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
   
   try {
+    // 获取选中的模型
+    const modelSelectEl = document.getElementById('model-select');
+    const selectedModel = modelSelectEl ? modelSelectEl.value : null;
+    
+    // 如果没有选择模型，提示用户
+    if (!selectedModel) {
+      addMessage('请先从下拉菜单中选择一个模型', 'received', true);
+      return;
+    }
+    
     // 调用后端聊天接口获取回复
-    const aiResponse = await callAI(messageText, currentChatId, userAuth, chatStorage);
+    const aiResponse = await callAI(messageText, currentChatId, userAuth, chatStorage, selectedModel);
     
     // 移除加载指示器
     loadingMessageDiv.remove();

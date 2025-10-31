@@ -160,3 +160,191 @@ export function confirmLogout() {
     window.notificationSystem.success('退出成功', '已安全退出登录');
   }
 }
+
+// 设置页面相关
+export function showSettingsPage() {
+  const page = document.getElementById('settings-page');
+  const chatMain = document.querySelector('.chat-main');
+  // 加载已保存的设置
+  loadSettingsForm();
+  page.style.display = 'flex';
+  chatMain.style.display = 'none';
+}
+
+export function handleDarkModeToggle() {
+  const darkModeCheckbox = document.getElementById('dark-mode-checkbox');
+  if (darkModeCheckbox) {
+    applyDarkMode(darkModeCheckbox.checked);
+    // 实时保存到 localStorage
+    localStorage.setItem('dark_mode', darkModeCheckbox.checked ? 'true' : 'false');
+  }
+}
+
+export function checkForUpdates() {
+  const checkBtn = document.querySelector('.check-update-btn');
+  if (checkBtn.classList.contains('checking')) {
+    return; // 已在检查中
+  }
+  
+  checkBtn.classList.add('checking');
+  checkBtn.textContent = '检中...';
+  checkBtn.disabled = true;
+  
+  // 从后端获取最新版本
+  fetch('https://chat.yinxh.fun/api/v1/version')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('网络请求失败');
+      }
+      return response.json();
+    })
+    .then(data => {
+      const currentVersion = document.getElementById('current-version').textContent.replace('v', '');
+      const latestVersion = data.version || data.latest_version || '0.1.0';
+      
+      // 比较版本号
+      if (compareVersions(latestVersion, currentVersion) > 0) {
+        if (window.notificationSystem) {
+          window.notificationSystem.success('发现新版本', `最新版本：v${latestVersion}，请下载更新`);
+        }
+      } else {
+        if (window.notificationSystem) {
+          window.notificationSystem.info('已是最新版本', '您正在使用最新版本的 HueyChat');
+        }
+      }
+    })
+    .catch(error => {
+      console.error('检查更新失败:', error);
+      if (window.notificationSystem) {
+        window.notificationSystem.error('检查失败', '无法连接到服务器，请检查网络连接');
+      }
+    })
+    .finally(() => {
+      checkBtn.classList.remove('checking');
+      checkBtn.textContent = '检查';
+      checkBtn.disabled = false;
+    });
+}
+
+// 版本号比较函数
+function compareVersions(v1, v2) {
+  const parts1 = v1.split('.').map(Number);
+  const parts2 = v2.split('.').map(Number);
+  
+  for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
+    const part1 = parts1[i] || 0;
+    const part2 = parts2[i] || 0;
+    
+    if (part1 > part2) return 1;
+    if (part1 < part2) return -1;
+  }
+  
+  return 0; // 版本相同
+}
+
+export function closeSettingsPage() {
+  const page = document.getElementById('settings-page');
+  const chatMain = document.querySelector('.chat-main');
+  page.style.display = 'none';
+  chatMain.style.display = 'flex';
+}
+
+export function showAboutPage() {
+  const page = document.getElementById('about-page');
+  const chatMain = document.querySelector('.chat-main');
+  page.style.display = 'flex';
+  chatMain.style.display = 'none';
+}
+
+export function closeAboutPage() {
+  const page = document.getElementById('about-page');
+  const chatMain = document.querySelector('.chat-main');
+  page.style.display = 'none';
+  chatMain.style.display = 'flex';
+}
+
+function loadSettingsForm() {
+  // 加载深色模式设置
+  const darkModeCheckbox = document.getElementById('dark-mode-checkbox');
+  if (darkModeCheckbox) {
+    darkModeCheckbox.checked = localStorage.getItem('dark_mode') === 'true';
+  }
+}
+
+export function saveSettingsPage() {
+  // 保存深色模式设置
+  const darkModeCheckbox = document.getElementById('dark-mode-checkbox');
+  if (darkModeCheckbox) {
+    localStorage.setItem('dark_mode', darkModeCheckbox.checked ? 'true' : 'false');
+  }
+  
+  if (window.notificationSystem) {
+    window.notificationSystem.success('设置已保存', '您的设置已成功保存');
+  }
+  
+  closeSettingsPage();
+}
+
+function applyDarkMode(isDarkMode) {
+  if (isDarkMode) {
+    document.body.classList.add('dark-mode');
+  } else {
+    document.body.classList.remove('dark-mode');
+  }
+}
+
+export { applyDarkMode };
+
+// 旧的模态框函数（保留用于兼容性）
+export function showSettingsModal() {
+  showSettingsPage();
+}
+
+export function closeSettingsModal() {
+  closeSettingsPage();
+}
+
+export function saveSettings() {
+  saveSettingsPage();
+}
+
+// 用户菜单相关函数
+export function showUserMenu() {
+  const userMenu = document.getElementById('user-menu');
+  const userCard = document.getElementById('user-card');
+  
+  // 获取用户卡片的位置
+  const rect = userCard.getBoundingClientRect();
+  
+  // 先显示菜单，这样才能获取到正确的offsetHeight
+  userMenu.classList.add('show');
+  
+  // 使用 setTimeout 确保菜单已经渲染，然后获取正确的高度
+  setTimeout(() => {
+    const menuHeight = userMenu.offsetHeight;
+    // 将菜单定位在用户卡片右侧
+    // 菜单底部与用户卡片底部对齐
+    const top = rect.bottom - menuHeight;
+    const left = rect.right + 10; // 在右侧，间距10px
+    
+    userMenu.style.top = top + 'px';
+    userMenu.style.left = left + 'px';
+  }, 0);
+}
+
+export function hideUserMenu() {
+  const userMenu = document.getElementById('user-menu');
+  userMenu.classList.remove('show');
+}
+
+export function handleUserMenuAbout() {
+  hideUserMenu();
+  // 关于菜单项处理：显示关于页面
+  showAboutPage();
+}
+
+export function handleUserMenuSettings() {
+  hideUserMenu();
+  // 设置菜单项处理：显示设置页面
+  showSettingsPage();
+}

@@ -5,9 +5,9 @@ import { NotificationSystem } from './notifications.js';
 import { PasswordStrengthChecker } from './password-checker.js';
 import { formatMessageContent, escapeHtml, copyCode, addMessage } from './message-formatter.js';
 import { renderChatList, switchToChat, createNewChat, createNewChatWithPrompt, deleteChat, setChatStorage, setCurrentChatId, setShowContextMenu } from './chat-manager.js';
-import { callAI, sendMessage } from './api.js';
-import { hideLoadingScreen, updateUserCard, loadRememberedCredentials, attemptAutoLogin, clearAllForms } from './ui-manager.js';
-import { showPromptModal, closePromptModal, savePrompt, showConfirmModal, closeConfirmModal, confirmDelete, showLoginModal, showUserProfile, closeUserProfileModal, showLoginForm, showRegisterForm, logout, closeLogoutModal, confirmLogout } from './modals.js';
+import { callAI, sendMessage, fetchAvailableModels } from './api.js';
+import { hideLoadingScreen, updateUserCard, loadRememberedCredentials, attemptAutoLogin, clearAllForms, loadModelsList } from './ui-manager.js';
+import { showPromptModal, closePromptModal, savePrompt, showConfirmModal, closeConfirmModal, confirmDelete, showLoginModal, showUserProfile, closeUserProfileModal, showLoginForm, showRegisterForm, logout, closeLogoutModal, confirmLogout, showSettingsModal, closeSettingsModal, saveSettings, showSettingsPage, closeSettingsPage, saveSettingsPage, applyDarkMode, handleDarkModeToggle, checkForUpdates, showUserMenu, hideUserMenu, handleUserMenuAbout, handleUserMenuSettings, showAboutPage, closeAboutPage } from './modals.js';
 import { performLogin, performRegister } from './form-handlers.js';
 import { showContextMenu, hideContextMenu, editChatPrompt, contextDeleteChat } from './context-menu.js';
 import { bindEventListeners } from './event-handlers.js';
@@ -31,14 +31,28 @@ async function initializeApp() {
   try {
     console.log('初始化应用...');
     
+    // 设置版本号
+    const versionElement = document.getElementById('current-version');
+    if (versionElement) {
+      versionElement.textContent = 'v0.1.0';
+    }
+    
     // 初始化通知系统
     notificationSystem.init();
+    
+    // 应用保存的深色模式设置
+    if (localStorage.getItem('dark_mode') === 'true') {
+      applyDarkMode(true);
+    }
     
     // 初始化用户卡片
     updateUserCard(userAuth);
     
     // 尝试自动登录（如果有记住的凭据）
     await attemptAutoLogin(userAuth, () => updateUserCard(userAuth));
+    
+    // 加载可用的AI模型列表
+    await loadModelsList(userAuth);
     
     // 暴露函数到全局作用域以供HTML调用
     window.showPromptModal = showPromptModal;
@@ -59,6 +73,20 @@ async function initializeApp() {
     window.showLoginModal = () => showLoginModal(userAuth);
     window.closeLogoutModal = closeLogoutModal;
     window.confirmLogout = confirmLogout;
+    window.showSettingsModal = showSettingsModal;
+    window.closeSettingsModal = closeSettingsModal;
+    window.saveSettings = saveSettings;
+    window.showSettingsPage = showSettingsPage;
+    window.closeSettingsPage = closeSettingsPage;
+    window.saveSettingsPage = saveSettingsPage;
+    window.showAboutPage = showAboutPage;
+    window.closeAboutPage = closeAboutPage;
+    window.handleDarkModeToggle = handleDarkModeToggle;
+    window.checkForUpdates = checkForUpdates;
+    window.showUserMenu = showUserMenu;
+    window.hideUserMenu = hideUserMenu;
+    window.handleUserMenuAbout = handleUserMenuAbout;
+    window.handleUserMenuSettings = handleUserMenuSettings;
     window.notificationSystem = notificationSystem;
     window.showConfirmModal = showConfirmModal;
     window.deleteChat = deleteChat;

@@ -170,3 +170,22 @@
 .confirm-modal-content {
   max-width: 400px;
 }
+
+/* 设置模态框样式 */
+.settings-modal-content {
+  max-width: 450px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.settings-section {
+  margin-bottom: 1.5rem;
+}
+
+.settings-section h4 {
+  margin: 0 0 1rem 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  letter-spacing: -0.025em;
+}

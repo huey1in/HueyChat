@@ -1,0 +1,541 @@
+/* 深色模式样式 */
+
+/* 为主要容器元素添加过渡 */
+body,
+.titlebar,
+.chat-sidebar,
+.sidebar-header,
+.chat-main,
+.settings-page,
+.chat-header,
+.chat-input,
+.settings-content,
+.modal-content,
+.context-menu,
+.user-menu {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* 为主要内容元素添加过渡 */
+.chat-list,
+.chat-item,
+.chat-messages,
+.message-content,
+.message-time,
+.user-card,
+.user-name,
+.user-status,
+.settings-section,
+.form-group,
+.toggle-slider,
+.setting-label {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* 为交互元素添加过渡 */
+.settings-btn,
+.new-chat-btn,
+.back-btn,
+.prompt-btn,
+.modal-close,
+.modal-header h3,
+.modal-body,
+.menu-item,
+.notification {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* 为表单元素添加过渡 */
+input,
+textarea,
+select {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+body.dark-mode {
+  background: #1a1a1a;
+  color: #f0f0f0;
+}
+
+body.dark-mode .titlebar {
+  background: #262626;
+  border-bottom-color: #3a3a3a;
+}
+
+body.dark-mode .chat-sidebar {
+  background: #1f1f1f;
+  border-right-color: #3a3a3a;
+}
+
+body.dark-mode .sidebar-header {
+  background: #1f1f1f;
+  border-bottom-color: #3a3a3a;
+}
+
+body.dark-mode .sidebar-header h2 {
+  color: #f0f0f0;
+}
+
+body.dark-mode .settings-btn,
+body.dark-mode .new-chat-btn {
+  background: #2a2a2a;
+  color: #f0f0f0;
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .settings-btn:hover,
+body.dark-mode .new-chat-btn:hover {
+  background: #333333;
+  border-color: #4a4a4a;
+}
+
+body.dark-mode .chat-list {
+  background: #1f1f1f;
+}
+
+body.dark-mode .chat-item {
+  color: #f0f0f0;
+}
+
+body.dark-mode .chat-item:hover {
+  background: #2a2a2a;
+}
+
+body.dark-mode .chat-item.active {
+  background: #2a2a2a;
+  border-right-color: #ff6b35;
+}
+
+body.dark-mode .chat-name {
+  color: #f0f0f0;
+}
+
+body.dark-mode .last-message {
+  color: #a0a0a0;
+}
+
+body.dark-mode .chat-time {
+  color: #707070;
+}
+
+body.dark-mode .user-card {
+  background: rgba(255, 107, 53, 0.1);
+  border-color: rgba(255, 107, 53, 0.2);
+}
+
+body.dark-mode .user-card:hover {
+  background: rgba(255, 107, 53, 0.15);
+  border-color: rgba(255, 107, 53, 0.3);
+}
+
+body.dark-mode .user-name {
+  color: #f0f0f0;
+}
+
+body.dark-mode .user-status {
+  color: #a0a0a0;
+}
+
+body.dark-mode .user-action {
+  color: #707070;
+}
+
+body.dark-mode .chat-main {
+  background: #1a1a1a;
+  border-left-color: #3a3a3a;
+}
+
+body.dark-mode .chat-header {
+  background: #1a1a1a;
+  border-bottom-color: #3a3a3a;
+}
+
+body.dark-mode .prompt-btn {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #f0f0f0;
+}
+
+body.dark-mode .prompt-btn:hover {
+  background: #333333;
+}
+
+body.dark-mode .user-name {
+  color: #f0f0f0;
+}
+
+body.dark-mode .user-status {
+  color: #a0a0a0;
+}
+
+body.dark-mode .chat-messages {
+  background: #1a1a1a;
+}
+
+body.dark-mode .message-content {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #f0f0f0;
+}
+
+body.dark-mode .message.sent .message-content {
+  background: #ff6b35;
+  border-color: #ff6b35;
+  color: white;
+}
+
+body.dark-mode .message-time {
+  color: #707070;
+}
+
+body.dark-mode .message-content.error {
+  background: #3a1a1a;
+  border-color: #6b2a2a;
+  color: #ff9999;
+}
+
+body.dark-mode .chat-input {
+  background: #1a1a1a;
+  border-top-color: #3a3a3a;
+}
+
+body.dark-mode .chat-input input {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #f0f0f0;
+}
+
+body.dark-mode .chat-input input::placeholder {
+  color: #707070;
+}
+
+body.dark-mode .chat-input select {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #f0f0f0;
+}
+
+body.dark-mode .chat-input select option {
+  background: #2a2a2a;
+  color: #f0f0f0;
+}
+
+body.dark-mode #send-button {
+  background: #ff6b35;
+  color: white;
+}
+
+body.dark-mode #send-button:hover {
+  background: #e85a2e;
+}
+
+body.dark-mode .settings-page {
+  background: #1a1a1a;
+  border-left-color: #3a3a3a;
+}
+
+body.dark-mode .settings-header {
+  background: #1a1a1a;
+  border-bottom-color: #3a3a3a;
+}
+
+body.dark-mode .settings-header h2 {
+  color: #f0f0f0;
+}
+
+body.dark-mode .back-btn {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #f0f0f0;
+}
+
+body.dark-mode .back-btn:hover {
+  background: #333333;
+  border-color: #4a4a4a;
+}
+
+body.dark-mode .settings-section .form-group {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .settings-section .form-group:hover {
+  background: #333333;
+  border-color: #4a4a4a;
+}
+
+body.dark-mode .setting-label {
+  color: #f0f0f0;
+}
+
+body.dark-mode .toggle-slider {
+  background-color: #3a3a3a;
+}
+
+body.dark-mode .toggle-slider::before {
+  background-color: #2a2a2a;
+}
+
+body.dark-mode .toggle-switch input:checked + .toggle-slider {
+  background-color: #ff6b35;
+}
+
+body.dark-mode .toggle-switch input:checked + .toggle-slider::before {
+  background-color: #f0f0f0;
+}
+
+/* 深色模式下的模态框 */
+body.dark-mode .modal {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+body.dark-mode .modal-content {
+  background: #2a2a2a;
+}
+
+body.dark-mode .modal-header {
+  border-bottom-color: #3a3a3a;
+}
+
+body.dark-mode .modal-header h3 {
+  color: #f0f0f0;
+}
+
+body.dark-mode .modal-close {
+  color: #a0a0a0;
+}
+
+body.dark-mode .modal-close:hover {
+  color: #f0f0f0;
+  background: #333333;
+}
+
+body.dark-mode .modal-body {
+  color: #f0f0f0;
+}
+
+body.dark-mode .modal-body textarea {
+  background: #1a1a1a;
+  border-color: #3a3a3a;
+  color: #f0f0f0;
+}
+
+body.dark-mode .modal-body textarea:focus {
+  border-color: #ff6b35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+}
+
+body.dark-mode .modal-tip {
+  color: #a0a0a0;
+}
+
+body.dark-mode .modal-footer {
+  border-top-color: #3a3a3a;
+}
+
+body.dark-mode .btn-secondary {
+  background: #3a3a3a;
+  border-color: #3a3a3a;
+  color: #f0f0f0;
+}
+
+body.dark-mode .btn-secondary:hover {
+  background: #4a4a4a;
+}
+
+body.dark-mode .btn-danger {
+  background: #8b3a3a;
+  border-color: #8b3a3a;
+  color: #fff0f0;
+}
+
+body.dark-mode .btn-danger:hover {
+  background: #a04a4a;
+}
+
+body.dark-mode .form-group {
+  color: #f0f0f0;
+}
+
+body.dark-mode .form-group input[type="text"],
+body.dark-mode .form-group input[type="password"] {
+  background: #1a1a1a;
+  border-color: #3a3a3a;
+  color: #f0f0f0;
+}
+
+body.dark-mode .form-group input::placeholder {
+  color: #707070;
+}
+
+body.dark-mode .form-group label {
+  color: #f0f0f0;
+}
+
+body.dark-mode .password-strength {
+  background: #2a2a2a;
+}
+
+body.dark-mode .strength-bar {
+  background: #1a1a1a;
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .strength-text {
+  color: #a0a0a0;
+}
+
+body.dark-mode .form-link-text {
+  color: #a0a0a0;
+}
+
+body.dark-mode .form-link {
+  color: #ff6b35;
+}
+
+/* 通知系统深色模式 */
+body.dark-mode .notification {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #f0f0f0;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .notification.success {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 95, 70, 0.15) 100%);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+body.dark-mode .notification.success .notification-title {
+  color: #6ee7b7;
+}
+
+body.dark-mode .notification.success .notification-message {
+  color: #a7f3d0;
+}
+
+body.dark-mode .notification.error {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(127, 29, 29, 0.15) 100%);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+body.dark-mode .notification.error .notification-title {
+  color: #f87171;
+}
+
+body.dark-mode .notification.error .notification-message {
+  color: #fca5a5;
+}
+
+body.dark-mode .notification.warning {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(120, 53, 15, 0.15) 100%);
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+body.dark-mode .notification.warning .notification-title {
+  color: #fbbf24;
+}
+
+body.dark-mode .notification.warning .notification-message {
+  color: #fcd34d;
+}
+
+body.dark-mode .notification.info {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(29, 78, 137, 0.15) 100%);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+body.dark-mode .notification.info .notification-title {
+  color: #60a5fa;
+}
+
+body.dark-mode .notification.info .notification-message {
+  color: #93c5fd;
+}
+
+body.dark-mode .notification-close {
+  background: rgba(255, 255, 255, 0.1);
+  color: #a0a0a0;
+}
+
+body.dark-mode .notification-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #f0f0f0;
+}
+
+body.dark-mode .notification-action {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #f0f0f0;
+}
+
+body.dark-mode .notification-action:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode .context-menu {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .menu-item {
+  color: #f0f0f0;
+  border-bottom-color: #3a3a3a;
+}
+
+body.dark-mode .menu-item:hover {
+  background: #333333;
+}
+
+body.dark-mode .menu-item-danger {
+  color: #ff9999;
+}
+
+body.dark-mode .menu-item-danger:hover {
+  background: #3a1a1a;
+}
+
+body.dark-mode .user-menu {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+/* 全局文字颜色覆盖 */
+body.dark-mode,
+body.dark-mode * {
+  color: #f0f0f0 !important;
+}
+
+/* 特定颜色恢复 */
+body.dark-mode .last-message,
+body.dark-mode .chat-time,
+body.dark-mode .user-status,
+body.dark-mode .user-action {
+  color: #a0a0a0 !important;
+}
+
+body.dark-mode .message-time {
+  color: #707070 !important;
+}
+
+body.dark-mode .chat-input input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: #707070 !important;
+}
+
+body.dark-mode .message-content.error,
+body.dark-mode .notification.error {
+  color: #ff9999 !important;
+}
+
+body.dark-mode .menu-item-danger {
+  color: #ff9999 !important;
+}

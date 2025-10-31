@@ -16,10 +16,12 @@
     <link rel="stylesheet" href="/src/styles/messages.css" />
     <link rel="stylesheet" href="/src/styles/code-blocks.css" />
     <link rel="stylesheet" href="/src/styles/modals.css" />
+    <link rel="stylesheet" href="/src/styles/settings-page.css" />
     <link rel="stylesheet" href="/src/styles/forms.css" />
     <link rel="stylesheet" href="/src/styles/buttons.css" />
     <link rel="stylesheet" href="/src/styles/context-menu.css" />
     <link rel="stylesheet" href="/src/styles/notifications.css" />
+    <link rel="stylesheet" href="/src/styles/dark-mode.css" />
   </head>
   <body>
 
@@ -49,14 +51,14 @@
       <div class="chat-sidebar">
         <div class="sidebar-header">
           <h2>Chat now!</h2>
-          <button class="new-chat-btn">+</button>
+          <button class="new-chat-btn" title="新建聊天">+</button>
         </div>
         <div class="chat-list">
           <!-- 聊天列表 -->
         </div>
         
         <!-- 用户信息卡片 -->
-        <div class="user-card" id="user-card" onclick="showLoginModal()">
+        <div class="user-card" id="user-card" onclick="showLoginModal()" onmouseover="window.showUserMenu && window.showUserMenu()" onmouseenter="window.userCardHovered = true" onmouseleave="window.userCardHovered = false; setTimeout(() => { if (!window.userMenuHovered) { window.hideUserMenu && window.hideUserMenu(); } }, 200)">
           <div class="user-info">
             <div class="user-name" id="user-name">未登录</div>
             <div class="user-status" id="user-status">点击登录或查看信息</div>
@@ -76,8 +78,49 @@
         
         <!-- 消息输入区域 -->
         <div class="chat-input">
+          <select id="model-select" title="选择AI模型">
+            <option value="">加载模型中...</option>
+          </select>
           <input type="text" id="message-input" placeholder="输入消息..." />
           <button id="send-button" type="button">发送</button>
+        </div>
+      </div>
+
+      <!-- 设置页面 -->
+      <div class="settings-page" id="settings-page" style="display: none;">
+        <div class="settings-header">
+          <button class="back-btn" onclick="closeSettingsPage()" title="返回">‹</button>
+          <h2>设置</h2>
+        </div>
+        <div class="settings-content">
+          <div class="settings-section">
+            <div class="form-group">
+              <span class="setting-label">深色模式</span>
+              <label class="toggle-switch">
+                <input type="checkbox" id="dark-mode-checkbox" onchange="window.handleDarkModeToggle && window.handleDarkModeToggle()" />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 关于页面 -->
+      <div class="settings-page" id="about-page" style="display: none;">
+        <div class="settings-header">
+          <button class="back-btn" onclick="closeAboutPage()" title="返回">‹</button>
+          <h2>关于</h2>
+        </div>
+        <div class="settings-content">
+          <div class="settings-section">
+            <div class="about-row">
+              <div class="form-group about-group">
+                <span class="setting-label">当前版本</span>
+                <span class="version-number" id="current-version">v1.0.0</span>
+              </div>
+              <button class="check-update-btn" onclick="window.checkForUpdates && window.checkForUpdates()" title="检查更新">检查</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -107,6 +150,16 @@
       </div>
       <div class="menu-item menu-item-danger" onclick="contextDeleteChat()">
         <span class="menu-text">删除聊天</span>
+      </div>
+    </div>
+
+    <!-- 用户菜单 -->
+    <div id="user-menu" class="user-menu" onmouseenter="window.userMenuHovered = true" onmouseleave="window.userMenuHovered = false; window.hideUserMenu && window.hideUserMenu()">
+      <div class="menu-item" data-menu-item="about" onclick="window.handleUserMenuAbout && window.handleUserMenuAbout()">
+        <span class="menu-text">关于</span>
+      </div>
+      <div class="menu-item" data-menu-item="settings" onclick="window.handleUserMenuSettings && window.handleUserMenuSettings()">
+        <span class="menu-text">设置</span>
       </div>
     </div>
 

@@ -1,5 +1,5 @@
 // UI管理和更新功能
-import { getApiUrl } from './api.js';
+import { getApiUrl, fetchAvailableModels } from './api.js';
 
 // 隐藏启动动画
 export function hideLoadingScreen() {
@@ -98,4 +98,54 @@ export function clearAllForms() {
   document.getElementById('register-username').value = '';
   document.getElementById('register-password').value = '';
   document.getElementById('register-confirm-password').value = '';
+}
+
+// 加载可用的AI模型列表
+export async function loadModelsList(userAuth) {
+  try {
+    const modelSelectEl = document.getElementById('model-select');
+    if (!modelSelectEl) return;
+
+    // 获取可用模型列表
+    const models = await fetchAvailableModels(userAuth);
+    
+    // 清空现有选项
+    modelSelectEl.innerHTML = '';
+    
+    if (models && models.length > 0) {
+      // 添加模型选项
+      models.forEach(model => {
+        const option = document.createElement('option');
+        option.value = model.id;
+        option.textContent = model.id;
+        modelSelectEl.appendChild(option);
+      });
+      
+      // 保存第一个模型为默认选中
+      localStorage.setItem('selected_model', models[0].id);
+      modelSelectEl.value = models[0].id;
+      
+      console.log(`成功加载 ${models.length} 个模型`);
+    } else {
+      // 如果没有获取到模型，显示提示
+      const option = document.createElement('option');
+      option.value = '';
+      option.textContent = '无可用模型，请检查网络';
+      option.disabled = true;
+      modelSelectEl.appendChild(option);
+    }
+  } catch (error) {
+    console.error('加载模型列表失败:', error);
+    
+    // 加载失败时显示错误提示
+    const modelSelectEl = document.getElementById('model-select');
+    if (modelSelectEl) {
+      modelSelectEl.innerHTML = '';
+      const option = document.createElement('option');
+      option.value = '';
+      option.textContent = '加载模型失败，请检查网络';
+      option.disabled = true;
+      modelSelectEl.appendChild(option);
+    }
+  }
 }

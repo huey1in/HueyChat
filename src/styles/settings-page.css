@@ -1,0 +1,317 @@
+/* 设置页面样式 */
+
+.settings-page {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  background: #ffffff;
+  border-left: 1px solid #e5e7eb;
+}
+
+.settings-page.show {
+  display: flex;
+}
+
+.settings-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem 0.75rem;
+  border-bottom: 1px solid #f1f3f4;
+  background: #ffffff;
+}
+
+.settings-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #1a1a1a;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.back-btn {
+  background: #f8f9fa;
+  border: 1px solid #e5e7eb;
+  color: #1a1a1a;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.back-btn:hover {
+  background: #f1f3f4;
+  border-color: #d1d5db;
+}
+
+.back-btn:active {
+  background: #e5e7eb;
+}
+
+.settings-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  padding-bottom: 0.01rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.settings-spacer {
+  flex: 1;
+}
+
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.settings-section:last-of-type {
+  margin-bottom: 0.1rem;
+}
+
+.settings-section-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.settings-section-title.no-border {
+  border-bottom: none;
+  padding-bottom: 0.75rem;
+}
+
+body.dark-mode .settings-section-title {
+  color: #f0f0f0;
+  border-bottom-color: #3a3a3a;
+}
+
+.about-row {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.form-group.about-group {
+  flex: 1;
+  justify-content: space-between;
+  padding: 1rem;
+  background: #f8f9fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  height: 44px;
+}
+
+body.dark-mode .form-group.about-group {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+.version-number {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #ff6b35;
+}
+
+body.dark-mode .version-number {
+  color: #ff8855;
+}
+
+.check-update-btn {
+  padding: 0.5rem 0.75rem;
+  background: #f8f9fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: #1a1a1a;
+  white-space: nowrap;
+  flex-shrink: 0;
+  height: 44px;
+  line-height: 44px;
+  padding: 0 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.check-update-btn:hover {
+  background: #f1f3f4;
+  border-color: #d1d5db;
+}
+
+.check-update-btn:active {
+  background: #e5e7eb;
+}
+
+.check-update-btn.checking {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+body.dark-mode .check-update-btn {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #f0f0f0;
+}
+
+body.dark-mode .check-update-btn:hover {
+  background: #333333;
+  border-color: #4a4a4a;
+}
+
+.settings-section .form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: #f8f9fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+
+.settings-section .form-group:hover {
+  background: #f1f3f4;
+  border-color: #d1d5db;
+}
+
+.setting-label {
+  color: #1a1a1a;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+/* 开关样式 */
+.toggle-switch {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.toggle-switch input {
+  display: none;
+}
+
+.toggle-slider {
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  background-color: #d1d5db;
+  border-radius: 12px;
+  position: relative;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: white;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background-color: #ff6b35;
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  user-select: none;
+  flex: 1;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #ff6b35;
+  flex-shrink: 0;
+}
+
+.checkbox-text {
+  color: #1a1a1a;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.settings-actions {
+  display: flex;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f3f4;
+  margin-top: auto;
+  justify-content: flex-end;
+}
+
+.settings-actions .btn-primary {
+  padding: 0.75rem 1.5rem;
+  background: #ff6b35;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.settings-actions .btn-primary:hover {
+  background: #e85a2e;
+}
+
+.settings-actions .btn-primary:active {
+  background: #d64825;
+}
+
+/* 设置页面滚动条样式 */
+.settings-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.settings-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.settings-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.settings-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
