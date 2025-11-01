@@ -125,8 +125,7 @@ export async function sendMessage(messageInputEl, sendButtonEl, currentChatId, u
   
   try {
     // 获取选中的模型
-    const modelSelectEl = document.getElementById('model-select');
-    const selectedModel = modelSelectEl ? modelSelectEl.value : null;
+    const selectedModel = window.selectedModel || localStorage.getItem('selected_model');
     
     // 如果没有选择模型，提示用户
     if (!selectedModel) {
@@ -163,6 +162,9 @@ export async function sendMessage(messageInputEl, sendButtonEl, currentChatId, u
       notificationSystem.warning('需要登录', '请先登录才能使用聊天功能');
     }
     addMessage(errorMessage, 'received', true);
+    
+    // 保存错误消息到存储，避免用户再次打开应用时只显示用户消息
+    chatStorage.addMessage(currentChatId, 'assistant', errorMessage);
   } finally {
     // 重新启用输入和发送按钮
     messageInputEl.disabled = false;

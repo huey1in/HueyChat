@@ -95,21 +95,115 @@
   align-items: center;
   gap: 0.5rem;
   flex-shrink: 0;
+  height: auto;
+  position: relative;
+}
+
+/* 自定义模型选择器 */
+.model-selector-wrapper {
+  position: relative;
+  flex-shrink: 0;
+  margin-left: -0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  height: 38px;
+  overflow: hidden;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.model-select-btn {
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 0;
+  font-size: 0.875rem;
+  outline: none;
+  background: #faf8f6;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  height: 36px;
+  box-sizing: border-box;
+  margin: 1px;
+}
+
+.model-select-btn:hover {
+  background: #f3f0ed;
+}
+
+.model-select-btn:focus {
+  outline: none;
+}
+
+.model-selector-wrapper:has(.model-select-btn:hover) {
+  border-color: #ff6b35;
+}
+
+.model-selector-wrapper:has(.model-select-btn:focus) {
+  border-color: #ff6b35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+.model-select-text {
+  flex: 1;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.model-select-arrow {
+  display: inline-flex;
+  font-size: 0.625rem;
+  transition: transform 0.2s ease;
+}
+
+.model-select-btn.open .model-select-arrow {
+  transform: rotate(180deg);
+}
+
+/* 自定义下拉菜单 */
+.model-dropdown {
+  position: fixed;
+  width: 150px;
+  background: #faf8f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  max-height: 300px;
+  overflow: hidden;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.model-dropdown-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  color: #1a1a1a;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.model-dropdown-item:hover {
+  background: #f3f0ed;
+}
+
+.model-dropdown-item.selected {
+  background: rgba(255, 107, 53, 0.1);
+  color: #ff6b35;
+  font-weight: 500;
 }
 
 .chat-input select {
-  padding: 0.75rem 0.75rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  outline: none;
-  background: #ffffff;
-  color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.15s ease;
-  width: 150px;
-  flex-shrink: 0;
-  margin-left: -0.6rem;
+  display: none;
 }
 
 .chat-input select:focus {
@@ -127,6 +221,8 @@
   background: #ffffff;
   color: #1a1a1a;
   transition: border-color 0.15s ease;
+  height: 36px;
+  box-sizing: border-box;
 }
 
 .chat-input input:focus {
@@ -145,6 +241,8 @@
   cursor: pointer;
   transition: background-color 0.15s ease;
   white-space: nowrap;
+  height: 36px;
+  box-sizing: border-box;
 }
 
 .chat-input button:hover:not(:disabled) {

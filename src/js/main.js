@@ -7,7 +7,7 @@ import { formatMessageContent, escapeHtml, copyCode, addMessage } from './messag
 import { renderChatList, switchToChat, createNewChat, createNewChatWithPrompt, deleteChat, setChatStorage, setCurrentChatId, setShowContextMenu } from './chat-manager.js';
 import { callAI, sendMessage, fetchAvailableModels } from './api.js';
 import { hideLoadingScreen, updateUserCard, loadRememberedCredentials, attemptAutoLogin, clearAllForms, loadModelsList } from './ui-manager.js';
-import { showPromptModal, closePromptModal, savePrompt, showConfirmModal, closeConfirmModal, confirmDelete, showLoginModal, showUserProfile, closeUserProfileModal, showLoginForm, showRegisterForm, logout, closeLogoutModal, confirmLogout, showSettingsModal, closeSettingsModal, saveSettings, showSettingsPage, closeSettingsPage, saveSettingsPage, applyDarkMode, handleDarkModeToggle, checkForUpdates, showUserMenu, hideUserMenu, handleUserMenuAbout, handleUserMenuSettings, showAboutPage, closeAboutPage } from './modals.js';
+import { showPromptModal, closePromptModal, savePrompt, showConfirmModal, closeConfirmModal, confirmDelete, showLoginModal, showUserProfile, closeUserProfileModal, showLoginForm, showRegisterForm, logout, closeLogoutModal, confirmLogout, showSettingsModal, closeSettingsModal, saveSettings, showSettingsPage, closeSettingsPage, saveSettingsPage, checkForUpdates, handleThemeChange } from './modals.js';
 import { performLogin, performRegister } from './form-handlers.js';
 import { showContextMenu, hideContextMenu, editChatPrompt, contextDeleteChat } from './context-menu.js';
 import { bindEventListeners } from './event-handlers.js';
@@ -40,10 +40,9 @@ async function initializeApp() {
     // 初始化通知系统
     notificationSystem.init();
     
-    // 应用保存的深色模式设置
-    if (localStorage.getItem('dark_mode') === 'true') {
-      applyDarkMode(true);
-    }
+    // 应用保存的主题色设置
+    const savedTheme = localStorage.getItem('theme_color') || 'white';
+    handleThemeChange(savedTheme);
     
     // 初始化用户卡片
     updateUserCard(userAuth);
@@ -79,14 +78,8 @@ async function initializeApp() {
     window.showSettingsPage = showSettingsPage;
     window.closeSettingsPage = closeSettingsPage;
     window.saveSettingsPage = saveSettingsPage;
-    window.showAboutPage = showAboutPage;
-    window.closeAboutPage = closeAboutPage;
-    window.handleDarkModeToggle = handleDarkModeToggle;
+    window.handleThemeChange = handleThemeChange;
     window.checkForUpdates = checkForUpdates;
-    window.showUserMenu = showUserMenu;
-    window.hideUserMenu = hideUserMenu;
-    window.handleUserMenuAbout = handleUserMenuAbout;
-    window.handleUserMenuSettings = handleUserMenuSettings;
     window.notificationSystem = notificationSystem;
     window.showConfirmModal = showConfirmModal;
     window.deleteChat = deleteChat;

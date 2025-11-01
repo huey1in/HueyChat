@@ -315,3 +315,34 @@ body.dark-mode .check-update-btn:hover {
 .settings-content::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.2);
 }
+
+/* 主题色选择器 */
+.theme-color-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: none;
+}
+
+.theme-color-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  position: relative;
+  border: none;
+}
+
+.theme-color-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.theme-color-btn.active {
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.5), 0 0 0 6px #ffffff, 0 4px 12px rgba(0, 0, 0, 0.2);
+}

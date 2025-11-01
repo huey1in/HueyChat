@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="/src/styles/buttons.css" />
     <link rel="stylesheet" href="/src/styles/context-menu.css" />
     <link rel="stylesheet" href="/src/styles/notifications.css" />
-    <link rel="stylesheet" href="/src/styles/dark-mode.css" />
+    <link rel="stylesheet" href="/src/styles/theme.css" />
   </head>
   <body>
 
@@ -50,15 +50,16 @@
       <!-- 左侧聊天列表 -->
       <div class="chat-sidebar">
         <div class="sidebar-header">
-          <h2>Chat now!</h2>
-          <button class="new-chat-btn" title="新建聊天">+</button>
+          <button class="settings-btn" id="settings-btn" title="设置" onclick="window.showSettingsPage && window.showSettingsPage()">设置</button>
+          <button class="check-update-btn-header" title="检查更新" onclick="window.checkForUpdates && window.checkForUpdates()">检查更新</button>
+          <button class="new-chat-btn" title="新建聊天">+ 新建</button>
         </div>
         <div class="chat-list">
           <!-- 聊天列表 -->
         </div>
         
         <!-- 用户信息卡片 -->
-        <div class="user-card" id="user-card" onclick="showLoginModal()" onmouseover="window.showUserMenu && window.showUserMenu()" onmouseenter="window.userCardHovered = true" onmouseleave="window.userCardHovered = false; setTimeout(() => { if (!window.userMenuHovered) { window.hideUserMenu && window.hideUserMenu(); } }, 200)">
+        <div class="user-card" id="user-card" onclick="showLoginModal()">
           <div class="user-info">
             <div class="user-name" id="user-name">未登录</div>
             <div class="user-status" id="user-status">点击登录或查看信息</div>
@@ -78,9 +79,15 @@
         
         <!-- 消息输入区域 -->
         <div class="chat-input">
-          <select id="model-select" title="选择AI模型">
-            <option value="">加载模型中...</option>
-          </select>
+          <div class="model-selector-wrapper">
+            <button id="model-select-btn" class="model-select-btn" title="选择AI模型">
+              <span class="model-select-text">加载模型中...</span>
+              <span class="model-select-arrow">▼</span>
+            </button>
+          </div>
+          <div id="model-dropdown" class="model-dropdown" style="display: none;">
+            <!-- 模型选项将通过 JavaScript 动态生成 -->
+          </div>
           <input type="text" id="message-input" placeholder="输入消息..." />
           <button id="send-button" type="button">发送</button>
         </div>
@@ -94,16 +101,16 @@
         </div>
         <div class="settings-content">
           <div class="settings-section">
-            <div class="form-group">
-              <span class="setting-label">深色模式</span>
-              <label class="toggle-switch">
-                <input type="checkbox" id="dark-mode-checkbox" onchange="window.handleDarkModeToggle && window.handleDarkModeToggle()" />
-                <span class="toggle-slider"></span>
-              </label>
+            <span class="setting-label">主题颜色</span>
+            <div class="theme-color-picker">
+              <button class="theme-color-btn" data-theme="white" title="白色" onclick="window.handleThemeChange && window.handleThemeChange('white')" style="background: #ffffff;"></button>
+              <button class="theme-color-btn" data-theme="black" title="黑色" onclick="window.handleThemeChange && window.handleThemeChange('black')" style="background: #000000;"></button>
             </div>
           </div>
         </div>
       </div>
+
+    <!-- 系统提示词设置模态框 -->
 
       <!-- 关于页面 -->
       <div class="settings-page" id="about-page" style="display: none;">
@@ -153,16 +160,6 @@
       </div>
     </div>
 
-    <!-- 用户菜单 -->
-    <div id="user-menu" class="user-menu" onmouseenter="window.userMenuHovered = true" onmouseleave="window.userMenuHovered = false; window.hideUserMenu && window.hideUserMenu()">
-      <div class="menu-item" data-menu-item="about" onclick="window.handleUserMenuAbout && window.handleUserMenuAbout()">
-        <span class="menu-text">关于</span>
-      </div>
-      <div class="menu-item" data-menu-item="settings" onclick="window.handleUserMenuSettings && window.handleUserMenuSettings()">
-        <span class="menu-text">设置</span>
-      </div>
-    </div>
-
     <!-- 确认删除模态框 -->
     <div id="confirm-modal" class="modal">
       <div class="modal-content confirm-modal-content">
@@ -205,7 +202,7 @@
               </label>
             </div>
             <div class="form-buttons">
-              <button class="btn-primary" onclick="performLogin()">登录</button>
+              <button id="login-btn" class="btn-primary" onclick="performLogin()">登录</button>
             </div>
             <div class="form-footer">
               <span class="form-link-text">还没有账号？</span>
@@ -234,7 +231,7 @@
               <input type="password" id="register-confirm-password" placeholder="请再次输入密码" />
             </div>
             <div class="form-buttons">
-              <button class="btn-primary" onclick="performRegister()">注册</button>
+              <button id="register-btn" class="btn-primary" onclick="performRegister()">注册</button>
             </div>
             <div class="form-footer">
               <span class="form-link-text">已有账号？</span>

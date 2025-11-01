@@ -171,13 +171,82 @@ export function showSettingsPage() {
   chatMain.style.display = 'none';
 }
 
-export function handleDarkModeToggle() {
-  const darkModeCheckbox = document.getElementById('dark-mode-checkbox');
-  if (darkModeCheckbox) {
-    applyDarkMode(darkModeCheckbox.checked);
-    // 实时保存到 localStorage
-    localStorage.setItem('dark_mode', darkModeCheckbox.checked ? 'true' : 'false');
+export function handleThemeChange(theme) {
+  // 保存主题色到 localStorage
+  localStorage.setItem('theme_color', theme);
+  
+  // 更新选中状态
+  document.querySelectorAll('.theme-color-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.dataset.theme === theme) {
+      btn.classList.add('active');
+    }
+  });
+  
+  // 移除所有旧的主题类名
+  Array.from(document.body.classList).forEach(className => {
+    if (className.startsWith('theme-')) {
+      document.body.classList.remove(className);
+    }
+  });
+  
+  // 添加新的主题类名到 body
+  document.body.classList.add(`theme-${theme}`);
+  
+  // 应用主题色到 CSS 变量
+  applyThemeColor(theme);
+}
+
+function getThemeName(theme) {
+  const names = {
+    white: '白色',
+    black: '黑色',
+    red: '红色',
+    orange: '橙色',
+    yellow: '黄色',
+    green: '绿色',
+    cyan: '青色',
+    blue: '蓝色',
+    purple: '紫色'
+  };
+  return names[theme] || theme;
+}
+
+function applyThemeColor(theme) {
+  const color = getThemeColor(theme);
+  document.documentElement.style.setProperty('--theme-primary', color);
+  
+  // 计算半透明版本
+  let rgb;
+  if (color === '#ffffff') {
+    rgb = '255, 255, 255';
+  } else if (color === '#000000') {
+    rgb = '0, 0, 0';
+  } else {
+    // 将十六进制转为 RGB
+    const r = parseInt(color.slice(1, 3), 16);
+    const g = parseInt(color.slice(3, 5), 16);
+    const b = parseInt(color.slice(5, 7), 16);
+    rgb = `${r}, ${g}, ${b}`;
   }
+  
+  document.documentElement.style.setProperty('--theme-light', `rgba(${rgb}, 0.1)`);
+  document.documentElement.style.setProperty('--theme-lighter', `rgba(${rgb}, 0.05)`);
+}
+
+function getThemeColor(theme) {
+  const colors = {
+    white: '#ffffff',
+    black: '#000000',
+    red: '#ff0000',
+    orange: '#ff7f00',
+    yellow: '#ffff00',
+    green: '#00ff00',
+    cyan: '#00ffff',
+    blue: '#0000ff',
+    purple: '#8000ff'
+  };
+  return colors[theme] || '#ff6b35';
 }
 
 export function checkForUpdates() {
@@ -209,7 +278,7 @@ export function checkForUpdates() {
         }
       } else {
         if (window.notificationSystem) {
-          window.notificationSystem.info('已是最新版本', '您正在使用最新版本的 HueyChat');
+          window.notificationSystem.info('已是最新版本', '您正在使用最新版本');
         }
       }
     })
@@ -249,26 +318,24 @@ export function closeSettingsPage() {
   chatMain.style.display = 'flex';
 }
 
-export function showAboutPage() {
-  const page = document.getElementById('about-page');
-  const chatMain = document.querySelector('.chat-main');
-  page.style.display = 'flex';
-  chatMain.style.display = 'none';
-}
-
-export function closeAboutPage() {
-  const page = document.getElementById('about-page');
-  const chatMain = document.querySelector('.chat-main');
-  page.style.display = 'none';
-  chatMain.style.display = 'flex';
-}
-
 function loadSettingsForm() {
-  // 加载深色模式设置
-  const darkModeCheckbox = document.getElementById('dark-mode-checkbox');
-  if (darkModeCheckbox) {
-    darkModeCheckbox.checked = localStorage.getItem('dark_mode') === 'true';
-  }
+  // 加载主题色设置
+  const savedTheme = localStorage.getItem('theme_color') || 'white';
+  document.querySelectorAll('.theme-color-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.dataset.theme === savedTheme) {
+      btn.classList.add('active');
+    }
+  });
+  
+  // 应用保存的主题色和类名
+  Array.from(document.body.classList).forEach(className => {
+    if (className.startsWith('theme-')) {
+      document.body.classList.remove(className);
+    }
+  });
+  document.body.classList.add(`theme-${savedTheme}`);
+  applyThemeColor(savedTheme);
 }
 
 export function saveSettingsPage() {
@@ -285,16 +352,6 @@ export function saveSettingsPage() {
   closeSettingsPage();
 }
 
-function applyDarkMode(isDarkMode) {
-  if (isDarkMode) {
-    document.body.classList.add('dark-mode');
-  } else {
-    document.body.classList.remove('dark-mode');
-  }
-}
-
-export { applyDarkMode };
-
 // 旧的模态框函数（保留用于兼容性）
 export function showSettingsModal() {
   showSettingsPage();
@@ -306,45 +363,4 @@ export function closeSettingsModal() {
 
 export function saveSettings() {
   saveSettingsPage();
-}
-
-// 用户菜单相关函数
-export function showUserMenu() {
-  const userMenu = document.getElementById('user-menu');
-  const userCard = document.getElementById('user-card');
-  
-  // 获取用户卡片的位置
-  const rect = userCard.getBoundingClientRect();
-  
-  // 先显示菜单，这样才能获取到正确的offsetHeight
-  userMenu.classList.add('show');
-  
-  // 使用 setTimeout 确保菜单已经渲染，然后获取正确的高度
-  setTimeout(() => {
-    const menuHeight = userMenu.offsetHeight;
-    // 将菜单定位在用户卡片右侧
-    // 菜单底部与用户卡片底部对齐
-    const top = rect.bottom - menuHeight;
-    const left = rect.right + 10; // 在右侧，间距10px
-    
-    userMenu.style.top = top + 'px';
-    userMenu.style.left = left + 'px';
-  }, 0);
-}
-
-export function hideUserMenu() {
-  const userMenu = document.getElementById('user-menu');
-  userMenu.classList.remove('show');
-}
-
-export function handleUserMenuAbout() {
-  hideUserMenu();
-  // 关于菜单项处理：显示关于页面
-  showAboutPage();
-}
-
-export function handleUserMenuSettings() {
-  hideUserMenu();
-  // 设置菜单项处理：显示设置页面
-  showSettingsPage();
 }
