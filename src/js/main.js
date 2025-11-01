@@ -7,7 +7,7 @@ import { formatMessageContent, escapeHtml, copyCode, addMessage } from './messag
 import { renderChatList, switchToChat, createNewChat, createNewChatWithPrompt, deleteChat, setChatStorage, setCurrentChatId, setShowContextMenu } from './chat-manager.js';
 import { callAI, sendMessage, fetchAvailableModels } from './api.js';
 import { hideLoadingScreen, updateUserCard, loadRememberedCredentials, attemptAutoLogin, clearAllForms, loadModelsList } from './ui-manager.js';
-import { showPromptModal, closePromptModal, savePrompt, showConfirmModal, closeConfirmModal, confirmDelete, showLoginModal, showUserProfile, closeUserProfileModal, showLoginForm, showRegisterForm, logout, closeLogoutModal, confirmLogout, showSettingsModal, closeSettingsModal, saveSettings, showSettingsPage, closeSettingsPage, saveSettingsPage, checkForUpdates, handleThemeChange } from './modals.js';
+import { showPromptModal, closePromptModal, savePrompt, showConfirmModal, closeConfirmModal, confirmDelete, showLoginModal, showUserProfile, closeUserProfileModal, showLoginForm, showRegisterForm, logout, closeLogoutModal, confirmLogout, showSettingsModal, closeSettingsModal, saveSettings, showSettingsPage, closeSettingsPage, saveSettingsPage, checkForUpdates, checkVersionOnStartup, handleThemeChange } from './modals.js';
 import { performLogin, performRegister } from './form-handlers.js';
 import { showContextMenu, hideContextMenu, editChatPrompt, contextDeleteChat } from './context-menu.js';
 import { bindEventListeners } from './event-handlers.js';
@@ -52,6 +52,9 @@ async function initializeApp() {
     
     // 加载可用的AI模型列表
     await loadModelsList(userAuth);
+    
+    // 检查版本是否最新（启动时自动检查）
+    checkVersionOnStartup();
     
     // 暴露函数到全局作用域以供HTML调用
     window.showPromptModal = showPromptModal;

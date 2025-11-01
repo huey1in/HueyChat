@@ -295,6 +295,34 @@ export function checkForUpdates() {
     });
 }
 
+// 启动时检查版本（不显示通知，仅在控制台记录）
+export function checkVersionOnStartup() {
+  fetch('https://chat.yinxh.fun/api/v1/version')
+    .then(response => {
+      if (!response.ok) throw new Error('网络请求失败');
+      return response.json();
+    })
+    .then(data => {
+      const currentVersion = document.getElementById('current-version')?.textContent.replace('v', '') || '0.1.0';
+      const latestVersion = data.version || data.latest_version || '0.1.0';
+      
+      console.log(`当前版本: v${currentVersion}, 最新版本: v${latestVersion}`);
+      
+      // 如果有新版本，显示一个成功通知
+      if (compareVersions(latestVersion, currentVersion) > 0) {
+        console.log('发现新版本，请检查更新');
+        if (window.notificationSystem) {
+          window.notificationSystem.success('发现新版本', `最新版本：v${latestVersion}，请下载更新`);
+        }
+      } else {
+        console.log('已是最新版本');
+      }
+    })
+    .catch(error => {
+      console.log('启动时版本检查失败，可能是网络问题:', error.message);
+    });
+}
+
 // 版本号比较函数
 function compareVersions(v1, v2) {
   const parts1 = v1.split('.').map(Number);
